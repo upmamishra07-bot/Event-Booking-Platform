@@ -1,0 +1,2664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Eventify - Event Booking Platform</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --primary: #6c4df6;
+      --secondary: #ff4d8d;
+      --dark: #17151f;
+      --text: #555;
+      --light: #f7f7fb;
+      --white: #ffffff;
+      --border: #e7e7ef;
+      --success: #1da56b;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      line-height: 1.6;
+      transition: 0.3s;
+    }
+
+    body.dark {
+      --dark: #f5f5f5;
+      --text: #c9c9d1;
+      --light: #211f2b;
+      --white: #17151f;
+      --border: #383542;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+
+    body.dark nav {
+      background: rgba(23,21,31,0.95);
+    }
+
+    .nav-container {
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .logo i {
+      margin-right: 5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--dark);
+    }
+
+    .mobile-menu {
+      display: none;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* ================= BUTTONS ================= */
+
+    .btn {
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(108,77,246,0.3);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      min-height: 700px;
+      padding-top: 75px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(rgba(18,15,35,0.72), rgba(18,15,35,0.72)),
+        url("https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1600&q=80")
+        center/cover;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      animation: fadeUp 1s ease;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #b9a9ff;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: #eee;
+      max-width: 620px;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .hero .btn-outline {
+      color: white;
+      border-color: white;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats {
+      margin-top: -60px;
+      position: relative;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+    }
+
+    .stat {
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child {
+      border: none;
+    }
+
+    .stat h3 {
+      font-size: 30px;
+      color: var(--primary);
+    }
+
+    .stat p {
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    /* ================= SECTION ================= */
+
+    section {
+      padding: 90px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title span {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-title h2 {
+      font-size: 35px;
+      margin: 7px 0;
+    }
+
+    .section-title p {
+      color: var(--text);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    /* ================= CATEGORIES ================= */
+
+    .categories {
+      background: var(--light);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 18px;
+    }
+
+    .category {
+      background: var(--white);
+      padding: 25px 15px;
+      border-radius: 14px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: 0.3s;
+    }
+
+    .category:hover {
+      transform: translateY(-7px);
+      border-color: var(--primary);
+    }
+
+    .category i {
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      margin: auto auto 12px;
+      border-radius: 50%;
+      background: rgba(108,77,246,0.1);
+      color: var(--primary);
+      font-size: 22px;
+    }
+
+    .category h4 {
+      font-size: 14px;
+    }
+
+    /* ================= EVENTS ================= */
+
+    .event-tools {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    .search-box,
+    .filter-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+
+    .event-tools input,
+    .event-tools select {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      color: var(--dark);
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .search-box input {
+      padding-left: 43px;
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 25px;
+    }
+
+    .event-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: 0.3s;
+      animation: fadeUp 0.5s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .event-image {
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.5s;
+    }
+
+    .event-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .event-category {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--primary);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .event-date {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: white;
+      color: var(--dark);
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .event-content {
+      padding: 20px;
+    }
+
+    .event-content h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 15px;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .event-info i {
+      width: 17px;
+      color: var(--primary);
+    }
+
+    .event-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .price small {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .no-events {
+      text-align: center;
+      padding: 40px;
+      color: var(--text);
+      grid-column: 1/-1;
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about {
+      background: var(--light);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-image img {
+      width: 100%;
+      border-radius: 18px;
+      display: block;
+    }
+
+    .about-content h2 {
+      font-size: 38px;
+      margin: 10px 0 18px;
+    }
+
+    .about-content p {
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .feature {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .feature i {
+      color: var(--success);
+    }
+
+    /* ================= DETAILS ================= */
+
+    .details {
+      background: var(--white);
+    }
+
+    .detail-box {
+      background: var(--light);
+      border-radius: 18px;
+      padding: 35px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 35px;
+    }
+
+    .detail-box img {
+      width: 100%;
+      height: 330px;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .detail-info h2 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .detail-info p {
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .detail-list div {
+      display: flex;
+      gap: 12px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .detail-list i {
+      color: var(--primary);
+      width: 20px;
+    }
+
+    /* ================= BOOKING ================= */
+
+    .booking {
+      background: var(--light);
+    }
+
+    .booking-wrapper {
+      max-width: 900px;
+      margin: auto;
+      background: var(--white);
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.07);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 5px;
+    }
+
+    .form-group.full {
+      grid-column: 1/-1;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 13px;
+      background: var(--white);
+      color: var(--dark);
+      outline: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .total-box {
+      background: rgba(108,77,246,0.08);
+      border: 1px solid rgba(108,77,246,0.2);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-box strong {
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    /* ================= COUNTDOWN ================= */
+
+    .countdown-section {
+      background:
+        linear-gradient(rgba(40,30,80,.8),rgba(40,30,80,.8)),
+        url("https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1600&q=80")
+        center/cover;
+      color: white;
+      text-align: center;
+    }
+
+    .countdown-section h2 {
+      font-size: 38px;
+      margin-bottom: 30px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .time-box {
+      min-width: 100px;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+    }
+
+    .time-box h3 {
+      font-size: 35px;
+    }
+
+    .time-box span {
+      font-size: 12px;
+    }
+
+    /* ================= CONTACT ================= */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+
+    .contact-info h2 {
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
+
+    .contact-info > p {
+      color: var(--text);
+      margin-bottom: 25px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .contact-item i {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      background: rgba(108,77,246,.1);
+      color: var(--primary);
+      border-radius: 10px;
+    }
+
+    .contact-item h4 {
+      font-size: 14px;
+    }
+
+    .contact-item p {
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .contact-form {
+      background: var(--light);
+      padding: 30px;
+      border-radius: 15px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #15131c;
+      color: white;
+      padding: 60px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 35px;
+      margin-bottom: 40px;
+    }
+
+    footer .logo {
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+
+    .footer-about {
+      color: #aaa;
+      font-size: 13px;
+      max-width: 350px;
+    }
+
+    footer h4 {
+      margin-bottom: 15px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer li {
+      margin-bottom: 8px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    footer li a:hover {
+      color: white;
+    }
+
+    .social {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social a {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      background: #292632;
+      border-radius: 50%;
+      transition: .3s;
+    }
+
+    .social a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      border-top: 1px solid #302d39;
+      padding-top: 20px;
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+    }
+
+    /* ================= MODAL ================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--white);
+      color: var(--dark);
+      width: 100%;
+      max-width: 500px;
+      padding: 35px;
+      border-radius: 18px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 25px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .modal-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .login-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .login-tab {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .login-tab.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    /* ================= TOAST ================= */
+
+    .toast {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      background: #222;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      transform: translateX(150%);
+      transition: .4s;
+      z-index: 5000;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.2);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    /* ================= ANIMATION ================= */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width: 992px) {
+      .event-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(3,1fr);
+      }
+
+      .about-grid,
+      .detail-box,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 75px;
+        left: -100%;
+        width: 100%;
+        background: var(--white);
+        flex-direction: column;
+        padding: 25px;
+        transition: .3s;
+        box-shadow: 0 10px 20px rgba(0,0,0,.1);
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .nav-buttons .login-btn {
+        display: none;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+      }
+
+      .stat:nth-child(2) {
+        border: none;
+      }
+
+      .event-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .hero {
+        min-height: 620px;
+      }
+
+      .hero h1 {
+        font-size: 45px;
+      }
+    }
+
+    @media(max-width: 600px) {
+      section {
+        padding: 65px 0;
+      }
+
+      .event-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        padding: 20px 10px;
+      }
+
+      .stat h3 {
+        font-size: 23px;
+      }
+
+      .about-content h2,
+      .contact-info h2 {
+        font-size: 28px;
+      }
+
+      .booking-wrapper {
+        padding: 25px 18px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-box {
+        padding: 20px;
+      }
+
+      .detail-info h2 {
+        font-size: 25px;
+      }
+
+      .time-box {
+        min-width: 75px;
+        padding: 13px;
+      }
+
+      .time-box h3 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+
+  <nav>
+    <div class="container nav-container">
+
+      <a href="#home" class="logo">
+        <i class="fa-solid fa-ticket"></i> Eventify
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#booking">Book Ticket</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-buttons">
+        <button class="icon-btn" id="darkModeBtn" title="Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button class="btn btn-primary login-btn" onclick="openLogin()">
+          Login
+        </button>
+
+        <div class="mobile-menu" id="mobileMenu">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+
+        <p style="color:#c7baff;font-weight:600;">
+          DISCOVER • CONNECT • EXPERIENCE
+        </p>
+
+        <h1>
+          Find Your Next <span>Unforgettable</span> Event
+        </h1>
+
+        <p>
+          Discover concerts, workshops, conferences, festivals and exciting
+          experiences happening around you. Book your tickets quickly and
+          securely with Eventify.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#events" class="btn btn-primary">
+            Explore Events
+          </a>
+
+          <a href="#booking" class="btn btn-outline">
+            Book Your Ticket
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= STATS ================= -->
+
+  <div class="stats">
+    <div class="container">
+      <div class="stats-grid">
+
+        <div class="stat">
+          <h3>250+</h3>
+          <p>Events</p>
+        </div>
+
+        <div class="stat">
+          <h3>50K+</h3>
+          <p>Happy Users</p>
+        </div>
+
+        <div class="stat">
+          <h3>100+</h3>
+          <p>Organizers</p>
+        </div>
+
+        <div class="stat">
+          <h3>20+</h3>
+          <p>Cities</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= CATEGORIES ================= -->
+
+  <section class="categories" id="categories">
+
+    <div class="container">
+
+      <div class="section-title">
+        <span>Browse By Category</span>
+        <h2>Choose Your Experience</h2>
+        <p>
+          Find an event according to your interests.
+        </p>
+      </div>
+
+      <div class="category-grid">
+
+        <div class="category" onclick="filterCategory('Music')">
+          <i class="fa-solid fa-music"></i>
+          <h4>Music</h4>
+        </div>
+
+        <div class="category" onclick="filterCategory('Conference')">
+          <i class="fa-solid fa-microphone"></i>
+          <h4>Conference</h4>
+        </div>
+
+        <div class="category" onclick="filterCategory('Workshop')">
+          <i class="fa-solid fa-laptop-code"></i>
+          <h4>Workshop</h4>
+        </div>
+
+        <div class="category" onclick="filterCategory('Festival')">
+          <i class="fa-solid fa-champagne-glasses"></i>
+          <h4>Festival</h4>
+        </div>
+
+        <div class="category" onclick="filterCategory('Sports')">
+          <i class="fa-solid fa-futbol"></i>
+          <h4>Sports</h4>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= EVENTS ================= -->
+
+  <section id="events">
+
+    <div class="container">
+
+      <div class="section-title">
+        <span>Upcoming Events</span>
+        <h2>Explore Popular Events</h2>
+        <p>
+          Search and filter events to find the perfect experience.
+        </p>
+      </div>
+
+      <div class="event-tools">
+
+        <div class="search-box">
+          <i class="fa-solid fa-search"></i>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search event by name..."
+          >
+        </div>
+
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="Music">Music</option>
+          <option value="Conference">Conference</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Festival">Festival</option>
+          <option value="Sports">Sports</option>
+        </select>
+
+        <select id="typeFilter">
+          <option value="all">All Types</option>
+          <option value="Offline">Offline</option>
+          <option value="Online">Online</option>
+        </select>
+
+      </div>
+
+      <div class="event-grid" id="eventGrid"></div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= ABOUT ================= -->
+
+  <section class="about" id="about">
+
+    <div class="container">
+
+      <div class="about-grid">
+
+        <div class="about-image">
+          <img
+            src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80"
+            alt="Event">
+        </div>
+
+        <div class="about-content">
+
+          <span style="color:var(--primary);font-weight:700;">
+            ABOUT EVENTIFY
+          </span>
+
+          <h2>
+            Making Every Event Memorable
+          </h2>
+
+          <p>
+            Eventify is a modern event booking platform designed to make
+            discovering and booking events simple, fast and convenient.
+          </p>
+
+          <p>
+            From live concerts to professional conferences and creative
+            workshops, users can explore different experiences from one
+            platform.
+          </p>
+
+          <div class="features">
+
+            <div class="feature">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Easy Online Booking</span>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Verified Events</span>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Secure Registration</span>
+            </div>
+
+            <div class="feature">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Multiple Categories</span>
+            </div>
+
+          </div>
+
+          <a href="#events" class="btn btn-primary">
+            Explore Events
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= EVENT DETAILS ================= -->
+
+  <section class="details">
+
+    <div class="container">
+
+      <div class="section-title">
+        <span>Event Details</span>
+        <h2>Featured Event</h2>
+        <p>
+          View complete information about our featured event.
+        </p>
+      </div>
+
+      <div class="detail-box">
+
+        <img
+          src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1000&q=80"
+          alt="Music Festival">
+
+        <div class="detail-info">
+
+          <span style="color:var(--primary);font-weight:700;">
+            MUSIC FESTIVAL
+          </span>
+
+          <h2>Summer Beats Festival 2026</h2>
+
+          <p>
+            Experience an unforgettable night with live performances,
+            amazing artists, food, entertainment and thousands of music lovers.
+          </p>
+
+          <div class="detail-list">
+
+            <div>
+              <i class="fa-solid fa-calendar"></i>
+              <span>20 September 2026</span>
+            </div>
+
+            <div>
+              <i class="fa-solid fa-clock"></i>
+              <span>6:00 PM - 11:00 PM</span>
+            </div>
+
+            <div>
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Palace Grounds, Bengaluru</span>
+            </div>
+
+            <div>
+              <i class="fa-solid fa-user"></i>
+              <span>Organized by Eventify Entertainment</span>
+            </div>
+
+            <div>
+              <i class="fa-solid fa-ticket"></i>
+              <span>Tickets starting from ₹999</span>
+            </div>
+
+          </div>
+
+          <a href="#booking" class="btn btn-primary"
+             onclick="selectEventByName('Summer Beats Festival 2026')">
+            Book Tickets
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= COUNTDOWN ================= -->
+
+  <section class="countdown-section">
+
+    <div class="container">
+
+      <h2>Next Big Event Starts In</h2>
+
+      <div class="countdown">
+
+        <div class="time-box">
+          <h3 id="days">00</h3>
+          <span>Days</span>
+        </div>
+
+        <div class="time-box">
+          <h3 id="hours">00</h3>
+          <span>Hours</span>
+        </div>
+
+        <div class="time-box">
+          <h3 id="minutes">00</h3>
+          <span>Minutes</span>
+        </div>
+
+        <div class="time-box">
+          <h3 id="seconds">00</h3>
+          <span>Seconds</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= BOOKING ================= -->
+
+  <section class="booking" id="booking">
+
+    <div class="container">
+
+      <div class="section-title">
+        <span>Ticket Booking</span>
+        <h2>Book Your Tickets</h2>
+        <p>
+          Fill the form below to register for your selected event.
+        </p>
+      </div>
+
+      <div class="booking-wrapper">
+
+        <form id="bookingForm">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="Enter phone number"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter email address"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Select Event *</label>
+              <select id="eventSelect" required>
+                <option value="">Choose Event</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Number of Tickets *</label>
+              <select id="ticketCount" required>
+                <option value="1">1 Ticket</option>
+                <option value="2">2 Tickets</option>
+                <option value="3">3 Tickets</option>
+                <option value="4">4 Tickets</option>
+                <option value="5">5 Tickets</option>
+                <option value="6">6 Tickets</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Booking Date *</label>
+              <input type="date" id="bookingDate" required>
+            </div>
+
+            <div class="form-group full">
+              <label>Special Request</label>
+              <textarea
+                id="message"
+                placeholder="Any special request..."
+              ></textarea>
+            </div>
+
+          </div>
+
+          <div class="total-box">
+            <span>Total Amount</span>
+            <strong id="totalAmount">₹0</strong>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-ticket"></i>
+            Confirm Booking
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= CONTACT ================= -->
+
+  <section id="contact">
+
+    <div class="container">
+
+      <div class="contact-grid">
+
+        <div class="contact-info">
+
+          <span style="color:var(--primary);font-weight:700;">
+            CONTACT US
+          </span>
+
+          <h2>Have Any Questions?</h2>
+
+          <p>
+            Our team is here to help you with event bookings, registration
+            and other queries.
+          </p>
+
+          <div class="contact-item">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <div>
+              <h4>Address</h4>
+              <p>MG Road, Bengaluru, Karnataka</p>
+            </div>
+
+          </div>
+
+          <div class="contact-item">
+
+            <i class="fa-solid fa-phone"></i>
+
+            <div>
+              <h4>Phone</h4>
+              <p>+91 98765 43210</p>
+            </div>
+
+          </div>
+
+          <div class="contact-item">
+
+            <i class="fa-solid fa-envelope"></i>
+
+            <div>
+              <h4>Email</h4>
+              <p>support@eventify.com</p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="contact-form">
+
+          <h3 style="margin-bottom:20px;">
+            Send a Message
+          </h3>
+
+          <form id="contactForm">
+
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="contactName" required>
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="contactEmail" required>
+            </div>
+
+            <div class="form-group">
+              <label>Message</label>
+              <textarea id="contactMessage" required></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="submit">
+              Send Message
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div>
+
+          <a href="#home" class="logo">
+            <i class="fa-solid fa-ticket"></i> Eventify
+          </a>
+
+          <p class="footer-about">
+            Your one-stop platform to discover, explore and book amazing
+            events and experiences.
+          </p>
+
+          <div class="social">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+
+        </div>
+
+        <div>
+
+          <h4>Quick Links</h4>
+
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#booking">Booking</a></li>
+          </ul>
+
+        </div>
+
+        <div>
+
+          <h4>Categories</h4>
+
+          <ul>
+            <li><a href="#events">Music</a></li>
+            <li><a href="#events">Conference</a></li>
+            <li><a href="#events">Workshop</a></li>
+            <li><a href="#events">Festival</a></li>
+          </ul>
+
+        </div>
+
+        <div>
+
+          <h4>Support</h4>
+
+          <ul>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Help Center</a></li>
+          </ul>
+
+        </div>
+
+      </div>
+
+      <div class="copyright">
+        © 2026 Eventify. All Rights Reserved.
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ================= LOGIN MODAL ================= -->
+
+  <div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+      <span class="close-modal" onclick="closeLogin()">
+        &times;
+      </span>
+
+      <h2>Welcome to Eventify</h2>
+
+      <div class="login-tabs">
+
+        <button
+          class="login-tab active"
+          id="loginTab"
+          onclick="showLoginForm()">
+          Login
+        </button>
+
+        <button
+          class="login-tab"
+          id="signupTab"
+          onclick="showSignupForm()">
+          Sign Up
+        </button>
+
+      </div>
+
+
+      <!-- LOGIN -->
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required placeholder="Enter email">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" required placeholder="Enter password">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;margin-top:15px;">
+          Login
+        </button>
+
+      </form>
+
+
+      <!-- SIGNUP -->
+
+      <form id="signupForm" style="display:none;">
+
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" required placeholder="Enter name">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required placeholder="Enter email">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" required placeholder="Create password">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;margin-top:15px;">
+          Create Account
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+
+  <!-- ================= TOAST ================= -->
+
+  <div class="toast" id="toast"></div>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /* =========================================
+       EVENT DATA
+    ========================================= */
+
+    const events = [
+
+      {
+        id: 1,
+        name: "Summer Beats Festival 2026",
+        category: "Music",
+        type: "Offline",
+        date: "20 Sep 2026",
+        time: "6:00 PM - 11:00 PM",
+        location: "Palace Grounds, Bengaluru",
+        price: 999,
+        image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=900&q=80",
+        description: "A spectacular music festival featuring popular artists and live performances."
+      },
+
+      {
+        id: 2,
+        name: "Future Tech Conference",
+        category: "Conference",
+        type: "Offline",
+        date: "25 Sep 2026",
+        time: "10:00 AM - 5:00 PM",
+        location: "Bangalore International Centre",
+        price: 1499,
+        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80",
+        description: "Explore the latest technology, AI and digital transformation trends."
+      },
+
+      {
+        id: 3,
+        name: "Web Development Workshop",
+        category: "Workshop",
+        type: "Online",
+        date: "28 Sep 2026",
+        time: "11:00 AM - 3:00 PM",
+        location: "Online Event",
+        price: 499,
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+        description: "Learn modern web development techniques from experienced developers."
+      },
+
+      {
+        id: 4,
+        name: "Food & Culture Festival",
+        category: "Festival",
+        type: "Offline",
+        date: "03 Oct 2026",
+        time: "12:00 PM - 9:00 PM",
+        location: "Cubbon Park, Bengaluru",
+        price: 299,
+        image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80",
+        description: "Enjoy delicious food, cultural performances and entertainment."
+      },
+
+      {
+        id: 5,
+        name: "Startup Networking Summit",
+        category: "Conference",
+        type: "Offline",
+        date: "10 Oct 2026",
+        time: "9:00 AM - 4:00 PM",
+        location: "Sheraton Grand, Bengaluru",
+        price: 1299,
+        image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80",
+        description: "Connect with founders, investors and professionals from different industries."
+      },
+
+      {
+        id: 6,
+        name: "Bengaluru Football Championship",
+        category: "Sports",
+        type: "Offline",
+        date: "15 Oct 2026",
+        time: "4:00 PM - 9:00 PM",
+        location: "Sree Kanteerava Stadium",
+        price: 799,
+        image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=900&q=80",
+        description: "Watch an exciting football championship with top local teams."
+      }
+
+    ];
+
+
+    /* =========================================
+       DISPLAY EVENTS
+    ========================================= */
+
+    const eventGrid = document.getElementById("eventGrid");
+
+    function displayEvents(data) {
+
+      eventGrid.innerHTML = "";
+
+      if(data.length === 0) {
+
+        eventGrid.innerHTML = `
+          <div class="no-events">
+            <i class="fa-solid fa-calendar-xmark"
+               style="font-size:40px;color:var(--primary);"></i>
+
+            <h3>No Events Found</h3>
+
+            <p>
+              Try changing your search or filter.
+            </p>
+          </div>
+        `;
+
+        return;
+      }
+
+      data.forEach(event => {
+
+        const card = document.createElement("div");
+
+        card.className = "event-card";
+
+        card.innerHTML = `
+
+          <div class="event-image">
+
+            <img src="${event.image}" alt="${event.name}">
+
+            <span class="event-category">
+              ${event.category}
+            </span>
+
+            <span class="event-date">
+              ${event.date}
+            </span>
+
+          </div>
+
+          <div class="event-content">
+
+            <h3>${event.name}</h3>
+
+            <div class="event-info">
+
+              <span>
+                <i class="fa-regular fa-clock"></i>
+                ${event.time}
+              </span>
+
+              <span>
+                <i class="fa-solid fa-location-dot"></i>
+                ${event.location}
+              </span>
+
+              <span>
+                <i class="fa-solid fa-globe"></i>
+                ${event.type}
+              </span>
+
+            </div>
+
+            <p style="font-size:12px;color:var(--text);margin-bottom:15px;">
+              ${event.description}
+            </p>
+
+            <div class="event-bottom">
+
+              <div class="price">
+                ₹${event.price}
+                <small>/ticket</small>
+              </div>
+
+              <button
+                class="btn btn-primary"
+                onclick="bookEvent(${event.id})">
+                Book Now
+              </button>
+
+            </div>
+
+          </div>
+        `;
+
+        eventGrid.appendChild(card);
+
+      });
+
+    }
+
+
+    /* =========================================
+       EVENT SELECT OPTIONS
+    ========================================= */
+
+    const eventSelect = document.getElementById("eventSelect");
+
+    events.forEach(event => {
+
+      const option = document.createElement("option");
+
+      option.value = event.id;
+
+      option.textContent =
+        `${event.name} - ₹${event.price}`;
+
+      eventSelect.appendChild(option);
+
+    });
+
+
+    /* =========================================
+       SEARCH + FILTER
+    ========================================= */
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const categoryFilter =
+      document.getElementById("categoryFilter");
+
+    const typeFilter =
+      document.getElementById("typeFilter");
+
+
+    function filterEvents() {
+
+      const search =
+        searchInput.value.toLowerCase();
+
+      const category =
+        categoryFilter.value;
+
+      const type =
+        typeFilter.value;
+
+      const filtered = events.filter(event => {
+
+        const matchSearch =
+          event.name.toLowerCase().includes(search);
+
+        const matchCategory =
+          category === "all" ||
+          event.category === category;
+
+        const matchType =
+          type === "all" ||
+          event.type === type;
+
+        return matchSearch &&
+               matchCategory &&
+               matchType;
+
+      });
+
+      displayEvents(filtered);
+
+    }
+
+
+    searchInput.addEventListener(
+      "input",
+      filterEvents
+    );
+
+    categoryFilter.addEventListener(
+      "change",
+      filterEvents
+    );
+
+    typeFilter.addEventListener(
+      "change",
+      filterEvents
+    );
+
+
+    /* =========================================
+       CATEGORY CLICK
+    ========================================= */
+
+    function filterCategory(category) {
+
+      categoryFilter.value = category;
+
+      document
+        .getElementById("events")
+        .scrollIntoView();
+
+      filterEvents();
+
+    }
+
+
+    /* =========================================
+       BOOK EVENT
+    ========================================= */
+
+    function bookEvent(id) {
+
+      const event = events.find(
+        item => item.id === id
+      );
+
+      eventSelect.value = event.id;
+
+      document
+        .getElementById("booking")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+      updateTotal();
+
+    }
+
+
+    /* =========================================
+       SELECT FEATURED EVENT
+    ========================================= */
+
+    function selectEventByName(name) {
+
+      const event = events.find(
+        item => item.name === name
+      );
+
+      if(event) {
+
+        eventSelect.value = event.id;
+
+        updateTotal();
+
+      }
+
+    }
+
+
+    /* =========================================
+       TOTAL PRICE
+    ========================================= */
+
+    const ticketCount =
+      document.getElementById("ticketCount");
+
+    const totalAmount =
+      document.getElementById("totalAmount");
+
+
+    function updateTotal() {
+
+      const selected =
+        events.find(
+          event => event.id == eventSelect.value
+        );
+
+      const quantity =
+        Number(ticketCount.value);
+
+      if(selected) {
+
+        totalAmount.textContent =
+          "₹" + (selected.price * quantity);
+
+      } else {
+
+        totalAmount.textContent = "₹0";
+
+      }
+
+    }
+
+
+    eventSelect.addEventListener(
+      "change",
+      updateTotal
+    );
+
+    ticketCount.addEventListener(
+      "change",
+      updateTotal
+    );
+
+
+    /* =========================================
+       BOOKING FORM
+    ========================================= */
+
+    const bookingForm =
+      document.getElementById("bookingForm");
+
+
+    bookingForm.addEventListener(
+      "submit",
+      function(e) {
+
+        e.preventDefault();
+
+        const name =
+          document.getElementById("name").value.trim();
+
+        const phone =
+          document.getElementById("phone").value.trim();
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const eventId =
+          eventSelect.value;
+
+        const quantity =
+          Number(ticketCount.value);
+
+        const bookingDate =
+          document.getElementById("bookingDate").value;
+
+        if(name.length < 3) {
+
+          showToast(
+            "Please enter a valid name."
+          );
+
+          return;
+
+        }
+
+        if(!/^[0-9]{10}$/.test(phone)) {
+
+          showToast(
+            "Please enter a valid 10-digit phone number."
+          );
+
+          return;
+
+        }
+
+        if(!email.includes("@")) {
+
+          showToast(
+            "Please enter a valid email."
+          );
+
+          return;
+
+        }
+
+        if(!eventId) {
+
+          showToast(
+            "Please select an event."
+          );
+
+          return;
+
+        }
+
+        if(!bookingDate) {
+
+          showToast(
+            "Please select booking date."
+          );
+
+          return;
+
+        }
+
+
+        const selectedEvent =
+          events.find(
+            event => event.id == eventId
+          );
+
+
+        const booking = {
+
+          id: Date.now(),
+
+          name: name,
+
+          phone: phone,
+
+          email: email,
+
+          event: selectedEvent.name,
+
+          tickets: quantity,
+
+          amount:
+            selectedEvent.price * quantity,
+
+          date: bookingDate,
+
+          bookedAt:
+            new Date().toLocaleString()
+
+        };
+
+
+        let bookings =
+          JSON.parse(
+            localStorage.getItem("eventBookings")
+          ) || [];
+
+
+        bookings.push(booking);
+
+
+        localStorage.setItem(
+          "eventBookings",
+          JSON.stringify(bookings)
+        );
+
+
+        bookingForm.reset();
+
+        totalAmount.textContent = "₹0";
+
+
+        showToast(
+          "🎉 Booking confirmed successfully!"
+        );
+
+
+        setTimeout(() => {
+
+          alert(
+            `Booking Confirmed!\n\n` +
+            `Event: ${selectedEvent.name}\n` +
+            `Tickets: ${quantity}\n` +
+            `Amount: ₹${selectedEvent.price * quantity}\n\n` +
+            `Thank you for booking with Eventify!`
+          );
+
+        }, 400);
+
+      }
+    );
+
+
+    /* =========================================
+       CONTACT FORM
+    ========================================= */
+
+    document
+      .getElementById("contactForm")
+      .addEventListener(
+        "submit",
+        function(e) {
+
+          e.preventDefault();
+
+          showToast(
+            "Message sent successfully!"
+          );
+
+          this.reset();
+
+        }
+      );
+
+
+    /* =========================================
+       TOAST MESSAGE
+    ========================================= */
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 3000);
+
+    }
+
+
+    /* =========================================
+       DARK MODE
+    ========================================= */
+
+    const darkModeBtn =
+      document.getElementById("darkModeBtn");
+
+
+    darkModeBtn.addEventListener(
+      "click",
+      function() {
+
+        document.body.classList.toggle("dark");
+
+        const isDark =
+          document.body.classList.contains("dark");
+
+        localStorage.setItem(
+          "eventDarkMode",
+          isDark
+        );
+
+        this.innerHTML = isDark
+          ? '<i class="fa-solid fa-sun"></i>'
+          : '<i class="fa-solid fa-moon"></i>';
+
+      }
+    );
+
+
+    if(
+      localStorage.getItem("eventDarkMode")
+      === "true"
+    ) {
+
+      document.body.classList.add("dark");
+
+      darkModeBtn.innerHTML =
+        '<i class="fa-solid fa-sun"></i>';
+
+    }
+
+
+    /* =========================================
+       LOGIN MODAL
+    ========================================= */
+
+    const loginModal =
+      document.getElementById("loginModal");
+
+
+    function openLogin() {
+
+      loginModal.classList.add("active");
+
+    }
+
+
+    function closeLogin() {
+
+      loginModal.classList.remove("active");
+
+    }
+
+
+    loginModal.addEventListener(
+      "click",
+      function(e) {
+
+        if(e.target === loginModal) {
+
+          closeLogin();
+
+        }
+
+      }
+    );
+
+
+    function showLoginForm() {
+
+      document.getElementById(
+        "loginForm"
+      ).style.display = "block";
+
+      document.getElementById(
+        "signupForm"
+      ).style.display = "none";
+
+      document.getElementById(
+        "loginTab"
+      ).classList.add("active");
+
+      document.getElementById(
+        "signupTab"
+      ).classList.remove("active");
+
+    }
+
+
+    function showSignupForm() {
+
+      document.getElementById(
+        "loginForm"
+      ).style.display = "none";
+
+      document.getElementById(
+        "signupForm"
+      ).style.display = "block";
+
+      document.getElementById(
+        "signupTab"
+      ).classList.add("active");
+
+      document.getElementById(
+        "loginTab"
+      ).classList.remove("active");
+
+    }
+
+
+    document
+      .getElementById("loginForm")
+      .addEventListener(
+        "submit",
+        function(e) {
+
+          e.preventDefault();
+
+          showToast(
+            "Login successful!"
+          );
+
+          closeLogin();
+
+          this.reset();
+
+        }
+      );
+
+
+    document
+      .getElementById("signupForm")
+      .addEventListener(
+        "submit",
+        function(e) {
+
+          e.preventDefault();
+
+          showToast(
+            "Account created successfully!"
+          );
+
+          showLoginForm();
+
+          this.reset();
+
+        }
+      );
+
+
+    /* =========================================
+       COUNTDOWN
+    ========================================= */
+
+    const eventDate =
+      new Date("September 20, 2026 18:00:00").getTime();
+
+
+    function updateCountdown() {
+
+      const now =
+        new Date().getTime();
+
+      const distance =
+        eventDate - now;
+
+
+      if(distance <= 0) {
+
+        document.getElementById("days")
+          .textContent = "00";
+
+        document.getElementById("hours")
+          .textContent = "00";
+
+        document.getElementById("minutes")
+          .textContent = "00";
+
+        document.getElementById("seconds")
+          .textContent = "00";
+
+        return;
+
+      }
+
+
+      const days =
+        Math.floor(
+          distance /
+          (1000 * 60 * 60 * 24)
+        );
+
+      const hours =
+        Math.floor(
+          (distance %
+            (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+      const minutes =
+        Math.floor(
+          (distance %
+            (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+      const seconds =
+        Math.floor(
+          (distance %
+            (1000 * 60)) /
+            1000
+        );
+
+
+      document.getElementById("days")
+        .textContent =
+        String(days).padStart(2,"0");
+
+      document.getElementById("hours")
+        .textContent =
+        String(hours).padStart(2,"0");
+
+      document.getElementById("minutes")
+        .textContent =
+        String(minutes).padStart(2,"0");
+
+      document.getElementById("seconds")
+        .textContent =
+        String(seconds).padStart(2,"0");
+
+    }
+
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
+
+    updateCountdown();
+
+
+    /* =========================================
+       MOBILE NAVIGATION
+    ========================================= */
+
+    const mobileMenu =
+      document.getElementById("mobileMenu");
+
+    const navLinks =
+      document.getElementById("navLinks");
+
+
+    mobileMenu.addEventListener(
+      "click",
+      function() {
+
+        navLinks.classList.toggle("active");
+
+      }
+    );
+
+
+    document
+      .querySelectorAll(".nav-links a")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          () => {
+
+            navLinks.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+      });
+
+
+    /* =========================================
+       INITIAL DISPLAY
+    ========================================= */
+
+    displayEvents(events);
+
+
+  </script>
+
+</body>
+</html>
+

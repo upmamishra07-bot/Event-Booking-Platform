@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Book Tickets - Eventify</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">Event<span>ify</span></div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="events.html">Events</a>
+
+        <a href="index.html#categories">Categories</a>
+
+    </nav>
+
+</header>
+
+<section class="booking-section">
+
+    <div class="booking-container">
+
+        <div class="booking-heading">
+
+            <p>SECURE YOUR SPOT</p>
+
+            <h1>Book Your Tickets</h1>
+
+            <span>
+                Fill in your details to complete your booking.
+            </span>
+
+        </div>
+
+        <form id="bookingForm">
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+            >
+
+            <small id="nameError"></small>
+
+            <label>Email Address</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+            >
+
+            <small id="emailError"></small>
+
+            <label>Phone Number</label>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="Enter 10 digit phone number"
+            >
+
+            <small id="phoneError"></small>
+
+            <label>Select Event</label>
+
+            <select id="eventSelect">
+
+                <option value="Sunset Music Festival">
+                    Sunset Music Festival - ₹799
+                </option>
+
+                <option value="Future Tech Summit">
+                    Future Tech Summit - ₹999
+                </option>
+
+                <option value="Creative Design Workshop">
+                    Creative Design Workshop - ₹599
+                </option>
+
+            </select>
+
+            <label>Number of Tickets</label>
+
+            <input
+                type="number"
+                id="tickets"
+                value="1"
+                min="1"
+                max="10"
+            >
+
+            <div class="price-box">
+
+                <span>Total Amount</span>
+
+                <strong>
+                    ₹<span id="totalPrice">799</span>
+                </strong>
+
+            </div>
+
+            <button type="submit" class="btn full">
+                Confirm Booking →
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<script src="js/booking.js"></script>
+
+</body>
+</html>
+

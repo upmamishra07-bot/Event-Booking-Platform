@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Event Details - Eventify</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">Event<span>ify</span></div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="events.html">Events</a>
+
+        <a href="index.html#categories">Categories</a>
+
+        <a href="index.html#about">About</a>
+
+    </nav>
+
+    <button id="darkModeBtn" class="dark-btn">🌙</button>
+
+</header>
+
+<section class="details-section">
+
+    <div class="details-image">
+
+        <img id="eventImage"
+             src="images/music.jpg"
+             alt="Event">
+
+    </div>
+
+    <div class="details-content">
+
+        <span id="eventCategory"
+              class="event-category">
+            Music
+        </span>
+
+        <h1 id="eventTitle">
+            Sunset Music Festival
+        </h1>
+
+        <p id="eventDescription">
+            Experience an amazing evening filled with music,
+            entertainment and unforgettable memories.
+        </p>
+
+        <div class="details-info">
+
+            <p>📅 <strong>Date:</strong>
+                <span id="eventDate">
+                    20 September 2026
+                </span>
+            </p>
+
+            <p>⏰ <strong>Time:</strong>
+                <span id="eventTime">
+                    6:00 PM - 11:00 PM
+                </span>
+            </p>
+
+            <p>📍 <strong>Venue:</strong>
+                <span id="eventVenue">
+                    Bangalore
+                </span>
+            </p>
+
+            <p>🎟️ <strong>Ticket:</strong>
+                ₹<span id="eventPrice">799</span>
+            </p>
+
+        </div>
+
+        <div class="countdown">
+
+            <p>EVENT STARTS IN</p>
+
+            <div id="countdownTimer">
+                Loading...
+            </div>
+
+        </div>
+
+        <a id="bookButton"
+           href="booking.html"
+           class="btn">
+            Book Tickets →
+        </a>
+
+    </div>
+
+</section>
+
+<section class="schedule">
+
+    <h2>Event Schedule</h2>
+
+    <div class="schedule-item">
+        <strong>06:00 PM</strong>
+        <span>Doors Open & Registration</span>
+    </div>
+
+    <div class="schedule-item">
+        <strong>07:00 PM</strong>
+        <span>Opening Ceremony</span>
+    </div>
+
+    <div class="schedule-item">
+        <strong>08:00 PM</strong>
+        <span>Live Performance</span>
+    </div>
+
+    <div class="schedule-item">
+        <strong>10:30 PM</strong>
+        <span>Closing Ceremony</span>
+    </div>
+
+</section>
+
+<section class="organizer">
+
+    <h2>About the Organizer</h2>
+
+    <p>
+        Eventify Events is a professional event organization
+        team dedicated to creating memorable experiences.
+    </p>
+
+</section>
+
+<footer>
+
+    <div class="logo">Event<span>ify</span></div>
+
+    <p>Discover. Book. Experience.</p>
+
+    <p class="copyright">
+        © 2026 Eventify. All Rights Reserved.
+    </p>
+
+</footer>
+
+<script src="js/script.js"></script>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const eventId = params.get("id");
+
+const events = {
+
+    1: {
+        title: "Sunset Music Festival",
+        category: "Music",
+        image: "images/music.jpg",
+        date: "20 September 2026",
+        time: "6:00 PM - 11:00 PM",
+        venue: "Bangalore",
+        price: "799",
+        description:
+        "Enjoy an unforgettable evening with live music, talented artists, food and entertainment."
+    },
+
+    2: {
+        title: "Future Tech Summit",
+        category: "Technology",
+        image: "images/tech.jpg",
+        date: "25 September 2026",
+        time: "10:00 AM - 5:00 PM",
+        venue: "Bangalore",
+        price: "999",
+        description:
+        "Meet technology experts and learn about AI, cloud computing and the future of technology."
+    },
+
+    3: {
+        title: "Creative Design Workshop",
+        category: "Workshop",
+        image: "images/workshop.jpg",
+        date: "02 October 2026",
+        time: "11:00 AM - 4:00 PM",
+        venue: "Mumbai",
+        price: "599",
+        description:
+        "Learn modern design techniques from experienced designers and improve your creative skills."
+    }
+
+};
+
+const event = events[eventId] || events[1];
+
+document.getElementById("eventTitle").textContent = event.title;
+document.getElementById("eventCategory").textContent = event.category;
+document.getElementById("eventImage").src = event.image;
+document.getElementById("eventDate").textContent = event.date;
+document.getElementById("eventTime").textContent = event.time;
+document.getElementById("eventVenue").textContent = event.venue;
+document.getElementById("eventPrice").textContent = event.price;
+document.getElementById("eventDescription").textContent =
+    event.description;
+
+document.getElementById("bookButton").href =
+    "booking.html?id=" + eventId;
+
+</script>
+
+</body>
+</html>
+

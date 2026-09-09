@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Events - Eventify</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">Event<span>ify</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="events.html" class="active">Events</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+    </nav>
+
+    <button id="darkModeBtn" class="dark-btn">🌙</button>
+
+</header>
+
+<section class="page-header">
+
+    <p>DISCOVER SOMETHING AMAZING</p>
+
+    <h1>Explore Events</h1>
+
+    <span>
+        Find the perfect event and create unforgettable memories.
+    </span>
+
+</section>
+
+<section class="event-section">
+
+    <div class="search-filter">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search events..."
+        >
+
+        <select id="categoryFilter">
+
+            <option value="all">All Categories</option>
+
+            <option value="Music">Music</option>
+
+            <option value="Technology">Technology</option>
+
+            <option value="Business">Business</option>
+
+            <option value="Workshop">Workshop</option>
+
+            <option value="Festival">Festival</option>
+
+            <option value="Sports">Sports</option>
+
+        </select>
+
+    </div>
+
+    <div id="eventsContainer" class="event-grid"></div>
+
+</section>
+
+<footer>
+
+    <div class="logo">Event<span>ify</span></div>
+
+    <p>Discover. Book. Experience.</p>
+
+    <p class="copyright">
+        © 2026 Eventify. All Rights Reserved.
+    </p>
+
+</footer>
+
+<script src="js/events.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
+
